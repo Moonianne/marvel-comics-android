@@ -1,13 +1,19 @@
 apply plugin: 'com.android.application'
+
 apply from: "$rootProject.projectDir/config/quality/quality.gradle"
+apply from: "$rootProject.projectDir/config/dependencies.gradle"
+
+def sdk = ext.sdk
+def libraries = ext.libraries
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion sdk.compileSdkVersion
+    buildToolsVersion sdk.buildToolsVersion
+
     defaultConfig {
         applicationId "com.segunfamisa.sample.comics"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion sdk.minSdkVersion
+        targetSdkVersion sdk.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -22,9 +28,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    //  support libraries
+    compile "com.android.support:appcompat-v7:$libraries.supportLibraryVersion"
+
+    // test libraries
+    testCompile "junit:junit:$libraries.jUnitVersion"
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$libraries.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
 }

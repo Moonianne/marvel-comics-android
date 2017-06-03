@@ -1,0 +1,15 @@
+ext.sdk = [
+        compileSdkVersion: 25,
+        minSdkVersion    : 15,
+        targetSdkVersion : 25,
+        buildToolsVersion: "25.0.2"
+]
+
+ext.libraries = [
+        // support libraries
+        supportLibraryVersion: "25.3.1",
+
+        // test libraries
+        jUnitVersion         : "4.12",
+        espressoVersion      : "2.2.2"
+]
