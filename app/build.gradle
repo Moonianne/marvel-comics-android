@@ -2,9 +2,11 @@ apply plugin: 'com.android.application'
 
 apply from: "$rootProject.projectDir/config/quality/quality.gradle"
 apply from: "$rootProject.projectDir/config/dependencies.gradle"
+apply from: "$rootProject.projectDir/config/secrets.gradle"
 
 def sdk = ext.sdk
 def libraries = ext.libraries
+def secrets = ext.secrets
 
 android {
     compileSdkVersion sdk.compileSdkVersion
@@ -17,6 +19,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "PUBLIC_API_KEY", secrets.publicKey)
+        buildConfigField("String", "PRIVATE_API_KEY", secrets.privateKey)
     }
     buildTypes {
         release {

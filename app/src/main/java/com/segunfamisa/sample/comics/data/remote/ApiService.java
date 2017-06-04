@@ -1,5 +1,7 @@
 package com.segunfamisa.sample.comics.data.remote;
 
+import com.segunfamisa.sample.comics.BuildConfig;
+
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,8 +17,8 @@ public interface ApiService {
 
     String BASE_URL = "http://gateway.marvel.com/v1/public/";
     String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ssZ"; //2029-12-31T00:00:00-0500
-    String PUBLIC_KEY = ""; // TODO: 04/06/2017 update with actual public key
-    String PRIVATE_KEY = ""; // TODO: 04/06/2017 update with actual private key
+    String PUBLIC_KEY = BuildConfig.PUBLIC_API_KEY;
+    String PRIVATE_KEY = BuildConfig.PRIVATE_API_KEY;
     int DEFAULT_LIMIT = 100;
 
     /**
@@ -25,7 +27,7 @@ public interface ApiService {
      * @param limit - limit of the responses to return
      * @param timeStamp - timestamp of the request
      * @param apiKey - public api key
-     * @param hash - hash of the timestamp+public_key+private_key
+     * @param hash - hash of the timestamp+private_key+public_key
      *
      * @return an observable of {@link ComicDataResponse} containing a list of comics matching the
      *          filters
