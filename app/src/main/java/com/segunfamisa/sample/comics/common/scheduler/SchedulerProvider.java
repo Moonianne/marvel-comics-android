@@ -11,9 +11,13 @@ import io.reactivex.Scheduler;
 interface SchedulerProvider {
 
     Scheduler io();
+
     Scheduler mainThread();
+
     Scheduler computation();
+
     Scheduler trampoline();
+
     Scheduler from(Executor executor);
 
 }
