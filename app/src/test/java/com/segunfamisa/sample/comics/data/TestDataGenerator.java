@@ -19,9 +19,24 @@ public class TestDataGenerator {
         return response == null ? new ArrayList<Comic>() : response.getData().getResults();
     }
 
+    /**
+     * Get {@link ComicDataResponse} for list of comics.
+     * @return - ComicDataResponse object
+     */
     public static ComicDataResponse getComicDataResponseForListOfComics() {
         Gson gson = new Gson();
-        return gson.fromJson(readJsonResponse("comics-response.json"), ComicDataResponse.class);
+        return gson.fromJson(readJsonResponse("comics-response.json"),
+                ComicDataResponse.class);
+    }
+
+    /**
+     * Get {@link ComicDataResponse} for single comic.
+     * @return - ComicDataResponse object
+     */
+    public static ComicDataResponse getComicDataResponseForSingleComic() {
+        Gson gson = new Gson();
+        return gson.fromJson(readJsonResponse("single-comic-response.json"),
+                ComicDataResponse.class);
     }
 
     private static String readJsonResponse(String fileName) {

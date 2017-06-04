@@ -36,7 +36,8 @@ public class RemoteDataSourceTest {
     @Mock
     private TimeStampProvider timeStampProvider;
 
-    private ComicDataResponse response;
+    private ComicDataResponse comicListResponse;
+    private ComicDataResponse singleComicResponse;
     private ComicDataSource remoteDataSource;
 
     /**
@@ -45,8 +46,8 @@ public class RemoteDataSourceTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        response = TestDataGenerator.getComicDataResponseForListOfComics();
-
+        comicListResponse = TestDataGenerator.getComicDataResponseForListOfComics();
+        singleComicResponse = TestDataGenerator.getComicDataResponseForSingleComic();
         remoteDataSource = new RemoteComicDataSource(apiService, hashCalculator, timeStampProvider);
     }
 
@@ -67,8 +68,9 @@ public class RemoteDataSourceTest {
         // given hash calculator returns hash
         given_hashCalculatorReturnsHash(hash);
 
+        final TestObserver<List<Comic>> testObserver = new TestObserver<>();
+
         // when we call remote data source to get comics
-        TestObserver<List<Comic>> testObserver = new TestObserver<>();
         remoteDataSource.getComics().subscribe(testObserver);
 
         // then verify that the api service is called
@@ -76,7 +78,37 @@ public class RemoteDataSourceTest {
 
         // then assert that the observed items are the same as the given ones
         List<Comic> comics = testObserver.values().get(0);
-        assertEquals(this.response.getData().getResults(), comics);
+        assertEquals(this.comicListResponse.getData().getResults(), comics);
+    }
+
+    @Test
+    public void getComic() {
+        // given the api returns a single comic
+        given_apiServiceReturnsSingleComic();
+
+        // given the following params
+        final long comicId = 1;
+        final String timeStamp = String.valueOf(System.currentTimeMillis());
+        final String apiKey = ApiService.PUBLIC_KEY;
+        final String hash = "singlehash";
+
+        // given the time stamp provider returns timeStamp
+        given_timeStampProviderReturnsTimeStamp(timeStamp);
+
+        // given the hash calculator returns hash
+        given_hashCalculatorReturnsHash(hash);
+
+        final TestObserver<Comic> testObserver = new TestObserver<>();
+
+        // when we call remote data source to get single comic detail
+        remoteDataSource.getComic(comicId).subscribe(testObserver);
+
+        // then verify that the api service is called with the expected parameters
+        verify(apiService).getComic(comicId, timeStamp, apiKey, hash);
+
+        // then assert that the observed items are the same as the given ones
+        Comic comic = testObserver.values().get(0);
+        assertEquals(this.singleComicResponse.getData().getResults().get(0), comic);
     }
 
     private void given_timeStampProviderReturnsTimeStamp(String timeStamp) {
@@ -89,6 +121,11 @@ public class RemoteDataSourceTest {
 
     private void given_apiServiceReturnsComics() {
         when(apiService.getComics(anyLong(), anyString(), anyString(), anyString()))
-                .thenReturn(Observable.just(response));
+                .thenReturn(Observable.just(comicListResponse));
+    }
+
+    private void given_apiServiceReturnsSingleComic() {
+        when(apiService.getComic(anyLong(), anyString(), anyString(), anyString()))
+                .thenReturn(Observable.just(singleComicResponse));
     }
 }
