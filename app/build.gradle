@@ -33,6 +33,18 @@ dependencies {
     compile "com.android.support:appcompat-v7:$libraries.supportLibraryVersion"
     compile "com.android.support:design:$libraries.supportLibraryVersion"
 
+    // networking
+    compile "com.squareup.retrofit2:retrofit:$libraries.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$libraries.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$libraries.retrofitVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$libraries.okHttpLoggingInterceptorVersion"
+
+    // gson
+    compile "com.google.code.gson:gson:$libraries.gsonVersion"
+
+    // rx android
+    compile "io.reactivex.rxjava2:rxandroid:$libraries.rxAndroidVersion"
+
     // test libraries
     testCompile "junit:junit:$libraries.jUnitVersion"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$libraries.espressoVersion", {
