@@ -48,6 +48,7 @@ dependencies {
     // test libraries
     testCompile "junit:junit:$libraries.jUnitVersion"
     testCompile "com.squareup.okhttp3:mockwebserver:$libraries.mockWebserverVersion"
+    testCompile "org.mockito:mockito-core:$libraries.mockitoVersion"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$libraries.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

@@ -18,5 +18,6 @@ ext.libraries = [
         // test libraries
         jUnitVersion                   : "4.12",
         mockWebserverVersion           : "3.8.0",
-        espressoVersion                : "2.2.2"
+        espressoVersion                : "2.2.2",
+        mockitoVersion                 : "2.8.9"
 ]
