@@ -15,6 +15,9 @@ public interface ApiService {
 
     String BASE_URL = "http://gateway.marvel.com/v1/public/";
     String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ssZ"; //2029-12-31T00:00:00-0500
+    String PUBLIC_KEY = ""; // TODO: 04/06/2017 update with actual public key
+    String PRIVATE_KEY = ""; // TODO: 04/06/2017 update with actual private key
+    int DEFAULT_LIMIT = 100;
 
     /**
      * Fetches lists of comics with filters.
@@ -28,7 +31,7 @@ public interface ApiService {
      *          filters
      */
     @GET("comics")
-    Observable<ComicDataResponse> getComics(@Query("limit") int limit,
+    Observable<ComicDataResponse> getComics(@Query("limit") long limit,
                                             @Query("ts") String timeStamp,
                                             @Query("apikey") String apiKey,
                                             @Query("hash") String hash);
