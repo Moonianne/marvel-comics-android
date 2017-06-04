@@ -39,7 +39,7 @@ public class RemoteComicDataSource implements ComicDataSource {
 
         return apiService.getComics(ApiService.DEFAULT_LIMIT, timeStamp,
                 ApiService.PUBLIC_KEY,
-                calculateHash(timeStamp, ApiService.PUBLIC_KEY, ApiService.PRIVATE_KEY))
+                calculateHash(timeStamp, ApiService.PRIVATE_KEY, ApiService.PUBLIC_KEY))
                 .map(new Function<ComicDataResponse, List<Comic>>() {
                     @Override
                     public List<Comic> apply(ComicDataResponse comicDataResponse) throws Exception {
@@ -52,7 +52,7 @@ public class RemoteComicDataSource implements ComicDataSource {
     public Observable<Comic> getComic(long comicId) {
         final String timeStamp = timeStampProvider.getTimeStamp();
         return apiService.getComic(comicId, timeStamp, ApiService.PUBLIC_KEY,
-                calculateHash(timeStamp, ApiService.PUBLIC_KEY, ApiService.PRIVATE_KEY))
+                calculateHash(timeStamp, ApiService.PRIVATE_KEY, ApiService.PUBLIC_KEY))
                 .map(new Function<ComicDataResponse, Comic>() {
                     @Override
                     public Comic apply(ComicDataResponse comicDataResponse) throws Exception {
@@ -64,8 +64,8 @@ public class RemoteComicDataSource implements ComicDataSource {
                 });
     }
 
-    private String calculateHash(String timeStamp, String publicKey, String privateKey) {
-        return hashCalculator.calculate(timeStamp, publicKey, privateKey);
+    private String calculateHash(String timeStamp, String privateKey, String publicKey) {
+        return hashCalculator.calculate(timeStamp, privateKey, publicKey);
     }
 
 }
