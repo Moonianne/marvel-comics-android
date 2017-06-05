@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 apply from: "$rootProject.projectDir/config/quality/quality.gradle"
 apply from: "$rootProject.projectDir/config/dependencies.gradle"
 apply from: "$rootProject.projectDir/config/secrets.gradle"

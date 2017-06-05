@@ -26,6 +26,10 @@ public class ComicDate {
         return type;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     /**
      * Builder class.
      */
