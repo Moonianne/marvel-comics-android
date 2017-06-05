@@ -72,7 +72,6 @@ public class LocalComicDataPersistence implements ComicDataPersistence {
             imageRealm = realm.createObject(ImageRealm.class, image.getPath());
 
             imageRealm.setExtension(image.getExtension());
-            imageRealm.setPath(image.getPath());
         }
         return imageRealm;
     }
