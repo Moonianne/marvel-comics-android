@@ -6,10 +6,19 @@ import android.support.annotation.Nullable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Helper class to calculate MD5 hash of given parameters.
  */
+@Singleton
 public class HashCalculator {
+
+    @Inject
+    public HashCalculator() {
+
+    }
 
     /**
      * Calculate the has using MD5 digest algorithm.

@@ -8,10 +8,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Maps from comic date realm to comic date.
  */
+@Singleton
 public class ComicDateRealmMapper implements Mapper<ComicDateRealm, ComicDate> {
+
+    @Inject
+    public ComicDateRealmMapper() {
+    }
+
     @Override
     public ComicDate map1(ComicDateRealm from) {
         return new ComicDate.Builder()

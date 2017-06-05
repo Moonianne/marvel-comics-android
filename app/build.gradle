@@ -38,6 +38,10 @@ dependencies {
     compile "com.android.support:appcompat-v7:$libraries.supportLibraryVersion"
     compile "com.android.support:design:$libraries.supportLibraryVersion"
 
+    // dagger
+    compile "com.google.dagger:dagger-android:$libraries.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$libraries.daggerVersion"
+
     // networking
     compile "com.squareup.retrofit2:retrofit:$libraries.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava2:$libraries.retrofitVersion"
@@ -56,5 +60,6 @@ dependencies {
     testCompile "org.mockito:mockito-core:$libraries.mockitoVersion"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$libraries.espressoVersion", {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
     })
 }
