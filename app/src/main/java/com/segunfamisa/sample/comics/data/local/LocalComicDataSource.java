@@ -10,6 +10,9 @@ import com.segunfamisa.sample.comics.data.model.Comic;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -17,10 +20,12 @@ import io.realm.RealmResults;
 /**
  * Fetches comic items from the db (realm db).
  */
+@Singleton
 public class LocalComicDataSource implements ComicDataSource {
 
     private final Mapper<ComicRealm, Comic> mapper;
 
+    @Inject
     public LocalComicDataSource(Mapper<ComicRealm, Comic> mapper) {
         this.mapper = mapper;
     }

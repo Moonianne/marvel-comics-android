@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Maps from {@link ComicRealm} to {@link Comic}.
  */
+@Singleton
 public class ComicRealmMapper implements Mapper<ComicRealm, Comic> {
 
     private final ImageRealmMapper imageRealmMapper;
@@ -26,6 +30,7 @@ public class ComicRealmMapper implements Mapper<ComicRealm, Comic> {
      * @param dateRealmMapper - date realm mapper
      * @param priceRealmMapper - price realm mapper
      */
+    @Inject
     public ComicRealmMapper(ImageRealmMapper imageRealmMapper,
                             ComicCreatorsRealmMapper creatorsRealmMapper,
                             ComicDateRealmMapper dateRealmMapper,

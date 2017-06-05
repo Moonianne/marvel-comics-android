@@ -8,12 +8,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Map from {@link com.segunfamisa.sample.comics.data.local.realm.CreatorSummaryRealm}
  * to {@link com.segunfamisa.sample.comics.data.model.CreatorSummary}.
  */
+@Singleton
 public class CreatorSummaryRealmMapper implements Mapper<CreatorSummaryRealm, CreatorSummary> {
 
+    @Inject
+    public CreatorSummaryRealmMapper() {
+    }
 
     @Override
     public CreatorSummary map1(CreatorSummaryRealm creatorSummaryRealm) {

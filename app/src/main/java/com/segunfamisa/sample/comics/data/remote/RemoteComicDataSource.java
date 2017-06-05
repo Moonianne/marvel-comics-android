@@ -9,12 +9,16 @@ import com.segunfamisa.sample.comics.util.HashCalculator;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 /**
  * Remote data source for comics.
  */
+@Singleton
 public class RemoteComicDataSource implements ComicDataSource {
 
     private final ApiService apiService;
@@ -28,6 +32,7 @@ public class RemoteComicDataSource implements ComicDataSource {
      * @param hashCalculator - hash calculator
      * @param timeStampProvider - timestamp provider
      */
+    @Inject
     public RemoteComicDataSource(ApiService apiService, HashCalculator hashCalculator,
                                  TimeStampProvider timeStampProvider) {
         this.apiService = apiService;

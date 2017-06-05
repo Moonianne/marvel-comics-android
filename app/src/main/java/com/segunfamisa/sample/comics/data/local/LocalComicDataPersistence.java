@@ -20,14 +20,19 @@ import com.segunfamisa.sample.comics.data.model.Image;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 
 /**
  * Writes comic data into local db (using realm).
  */
+@Singleton
 public class LocalComicDataPersistence implements ComicDataPersistence {
 
+    @Inject
     public LocalComicDataPersistence() {
     }
 
