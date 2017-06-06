@@ -13,6 +13,7 @@ ext.libraries = [
         daggerVersion                  : "2.11",
         retrofitVersion                : "2.3.0",
         gsonVersion                    : "2.8.0",
+        glideVersion                   : "4.0.0-RC0",
         rxAndroidVersion               : "2.0.1",
         okHttpLoggingInterceptorVersion: "3.8.0",
 
