@@ -30,6 +30,9 @@ public class ComicDetailsPresenterTest {
     private final Comic comic = TestDataGenerator.getComic();
     private ComicDetailsContract.Presenter presenter;
 
+    /**
+     * Set Up.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);

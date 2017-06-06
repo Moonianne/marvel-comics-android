@@ -24,8 +24,15 @@ public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
     private ComicDetailsContract.View view;
     private CompositeDisposable compositeDisposable;
 
+    /**
+     * Comic details presenter.
+     *
+     * @param comicRepository - comic repository
+     * @param schedulerProvider - scheduler provider
+     */
     @Inject
-    public ComicDetailsPresenter(ComicRepository comicRepository, SchedulerProvider schedulerProvider) {
+    public ComicDetailsPresenter(ComicRepository comicRepository,
+                                 SchedulerProvider schedulerProvider) {
         this.comicRepository = comicRepository;
         this.schedulerProvider = schedulerProvider;
         compositeDisposable = new CompositeDisposable();

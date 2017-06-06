@@ -107,7 +107,7 @@ public class ComicDetailsFragment extends Fragment implements ComicDetailsContra
         binding.toolbar.setNavigationIcon(R.drawable.ic_nav_back);
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
