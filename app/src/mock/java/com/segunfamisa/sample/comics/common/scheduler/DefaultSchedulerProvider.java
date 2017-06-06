@@ -8,23 +8,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Default implementation of {@link SchedulerProvider}.
+ * Mock Default implementation of {@link SchedulerProvider}.
  */
 public class DefaultSchedulerProvider implements SchedulerProvider {
 
     @Override
     public Scheduler io() {
-        return Schedulers.io();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler mainThread() {
-        return AndroidSchedulers.mainThread();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler computation() {
-        return Schedulers.computation();
+        return Schedulers.trampoline();
     }
 
     @Override
@@ -34,6 +34,6 @@ public class DefaultSchedulerProvider implements SchedulerProvider {
 
     @Override
     public Scheduler from(Executor executor) {
-        return Schedulers.from(executor);
+        return Schedulers.trampoline();
     }
 }
