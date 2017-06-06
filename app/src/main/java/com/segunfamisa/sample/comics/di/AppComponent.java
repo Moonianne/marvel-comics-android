@@ -1,9 +1,9 @@
 package com.segunfamisa.sample.comics.di;
 
-import com.segunfamisa.sample.comics.MainActivity;
 import com.segunfamisa.sample.comics.data.di.ApiModule;
 import com.segunfamisa.sample.comics.data.di.ComicRepositoryModule;
-import com.segunfamisa.sample.comics.di.AppModule;
+import com.segunfamisa.sample.comics.presentation.comiclist.di.ComicListComponent;
+import com.segunfamisa.sample.comics.presentation.comiclist.di.ComicListPresenterModule;
 
 import javax.inject.Singleton;
 
@@ -14,6 +14,6 @@ import dagger.Component;
 @Component(modules = { ComicRepositoryModule.class, ApiModule.class, AppModule.class})
 public interface AppComponent {
 
-    void inject(MainActivity activity);
+    ComicListComponent plus(ComicListPresenterModule module);
 
 }

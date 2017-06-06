@@ -2,16 +2,15 @@ package com.segunfamisa.sample.comics.presentation.comiclist.di;
 
 
 import com.segunfamisa.sample.comics.data.di.ScreenScoped;
-import com.segunfamisa.sample.comics.di.AppComponent;
 import com.segunfamisa.sample.comics.presentation.comiclist.ComicListFragment;
 
-import dagger.Component;
+import dagger.Subcomponent;
 
 /**
- * ComicList dagger component.
+ * ComicList dagger sub component.
  */
 @ScreenScoped
-@Component(dependencies = AppComponent.class, modules = ComicListPresenterModule.class)
+@Subcomponent(modules = ComicListPresenterModule.class)
 public interface ComicListComponent {
 
     void inject(ComicListFragment fragment);
