@@ -20,9 +20,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ComicListPresenterTest {
 
-    private ComicListContract.Presenter presenter;
+public class ComicListPresenterTest {
 
     @Mock
     private ComicListContract.View view;
@@ -31,7 +30,11 @@ public class ComicListPresenterTest {
     private ComicRepository comicRepository;
 
     private List<Comic> comicList = TestDataGenerator.getComics();
+    private ComicListContract.Presenter presenter;
 
+    /**
+     * Set Up.
+     */
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -55,7 +58,7 @@ public class ComicListPresenterTest {
         // then verify that the repository is called
         verify(comicRepository).getComics();
 
-        // then verify that the view is called to show/hide loading (before the request) at least once
+        // then verify that the view is called to show/hide loading before the request at least once
         verify(view, atLeastOnce()).setLoading(showLoading);
 
         // then verify that the view is called to hide the loading (after request has been made)
@@ -81,7 +84,7 @@ public class ComicListPresenterTest {
         // then verify that the repository is called
         verify(comicRepository).getComics();
 
-        // then verify that the view is called to show/hide loading (before the request) at least once
+        // then verify that the view is called to show/hide loading before the request at least once
         verify(view, atLeastOnce()).setLoading(showLoading);
 
         // then verify that the view is called to hide the loading (after request has been made)

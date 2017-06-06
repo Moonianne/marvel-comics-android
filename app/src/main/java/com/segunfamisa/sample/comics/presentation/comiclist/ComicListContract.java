@@ -8,7 +8,7 @@ import com.segunfamisa.sample.comics.presentation.base.BaseView;
 import java.util.List;
 
 /**
- * Contract between the View and Presenter
+ * Contract between the View and Presenter.
  */
 public interface ComicListContract {
 

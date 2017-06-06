@@ -22,8 +22,15 @@ public class ComicListPresenter implements ComicListContract.Presenter {
     private CompositeDisposable compositeDisposable;
     private ComicListContract.View view;
 
+    /**
+     * Construct new presenter.
+     *
+     * @param comicRepository - comic repository
+     * @param schedulerProvider - scheduler provider
+     */
     @Inject
-    public ComicListPresenter(ComicRepository comicRepository, SchedulerProvider schedulerProvider) {
+    public ComicListPresenter(ComicRepository comicRepository,
+                              SchedulerProvider schedulerProvider) {
         this.comicRepository = comicRepository;
         this.schedulerProvider = schedulerProvider;
         compositeDisposable = new CompositeDisposable();
