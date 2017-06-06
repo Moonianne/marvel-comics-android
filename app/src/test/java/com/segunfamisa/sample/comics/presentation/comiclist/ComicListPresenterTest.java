@@ -1,10 +1,10 @@
 package com.segunfamisa.sample.comics.presentation.comiclist;
 
-import com.segunfamisa.sample.comics.common.scheduler.DefaultSchedulerProvider;
 import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.TestDataGenerator;
 import com.segunfamisa.sample.comics.data.model.Comic;
+import com.segunfamisa.sample.comics.util.TestSchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class ComicListPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        SchedulerProvider schedulerProvider = new DefaultSchedulerProvider();
+        SchedulerProvider schedulerProvider = new TestSchedulerProvider();
         presenter = new ComicListPresenter(comicRepository, schedulerProvider);
     }
 
