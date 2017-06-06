@@ -19,6 +19,10 @@ public class TestDataGenerator {
         return response == null ? new ArrayList<Comic>() : response.getData().getResults();
     }
 
+    public static Comic getComic() {
+        return getComicDataResponseForSingleComic().getData().getResults().get(0);
+    }
+
     /**
      * Get {@link ComicDataResponse} for list of comics.
      * @return - ComicDataResponse object
