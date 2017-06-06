@@ -8,7 +8,7 @@ import io.reactivex.Scheduler;
 /**
  * Interface defining the RxJava Scheduler provider.
  */
-interface SchedulerProvider {
+public interface SchedulerProvider {
 
     Scheduler io();
 
