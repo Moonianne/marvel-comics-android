@@ -36,7 +36,7 @@ public class ComicDetailsFragment extends Fragment implements ComicDetailsContra
      * @param comicId - comic id
      * @return a fragment instance with comic id set in the arguments;
      */
-    public Fragment newInstance(long comicId) {
+    public static Fragment newInstance(long comicId) {
         Fragment frag = new ComicDetailsFragment();
         Bundle args = new Bundle();
         args.putLong(ARG_COMIC_ID, comicId);

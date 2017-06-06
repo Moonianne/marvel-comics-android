@@ -17,6 +17,7 @@ import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicListBinding;
+import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
 import com.segunfamisa.sample.comics.presentation.comiclist.adapter.ComicListAdapter;
 import com.segunfamisa.sample.comics.presentation.comiclist.di.ComicListPresenterModule;
 
@@ -107,7 +108,12 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
 
     @Override
     public void showComicDetails(long comicId) {
-        // TODO: 06/06/2017 navigate to comic details
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, ComicDetailsFragment.newInstance(comicId),
+                        ComicDetailsFragment.class.getSimpleName())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
