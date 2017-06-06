@@ -71,6 +71,7 @@ public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
         view.showPageCount(String.valueOf(comic.getPageCount()));
         view.showPrice(resolvePrice(comic.getPrices()));
         view.showAuthors(comic.getCreators());
+        view.showComicImage(comic.getThumbnail().getUrl());
     }
 
     private double resolvePrice(List<ComicPrice> prices) {

@@ -28,6 +28,8 @@ public interface ComicDetailsContract {
 
         void showAuthors(ComicCreators authors);
 
+        void showComicImage(String imageUrl);
+
         void showLoading(boolean isLoading);
 
         void showError(String error);
