@@ -81,12 +81,36 @@ public class ComicRepository {
         }
     }
 
-    public void refresh() {
-        forceRefresh = true;
+    /**
+     * Get single comic.
+     *
+     * @param comicId - id of the comic to get
+     * @return - a {@link Comic} object
+     */
+    public Observable<Comic> getComic(long comicId) {
+        final Comic inMemoryComic = inMemoryDataSource.get(comicId);
+
+        if (inMemoryComic != null) {
+            return Observable.just(inMemoryComic);
+        }
+
+        List<Observable<Comic>> sourcesObservable = new ArrayList<>();
+        sourcesObservable.add(getLocalComic(comicId));
+        sourcesObservable.add(getAndSaveRemoteComic(comicId));
+
+        return Observable.concat(sourcesObservable)
+                .filter(new Predicate<Comic>() {
+                    @Override
+                    public boolean test(Comic comic) throws Exception {
+                        return comic != null;
+                    }
+                })
+                .firstElement()
+                .toObservable();
     }
 
-    public Observable<Comic> getComic(long comicId) {
-        return null;
+    public void refresh() {
+        forceRefresh = true;
     }
 
     private Observable<List<Comic>> getLocalComics() {
@@ -110,6 +134,27 @@ public class ComicRepository {
                             localDataPersistence.save(comic);
                             inMemoryDataSource.put(comic.getId(), comic);
                         }
+                    }
+                });
+    }
+
+    private Observable<Comic> getAndSaveRemoteComic(long comicId) {
+        return remoteDataSource.getComic(comicId)
+                .doOnNext(new Consumer<Comic>() {
+                    @Override
+                    public void accept(Comic comic) throws Exception {
+                        localDataPersistence.save(comic);
+                        inMemoryDataSource.put(comic.getId(), comic);
+                    }
+                });
+    }
+
+    private Observable<Comic> getLocalComic(final long comicId) {
+        return localDataSource.getComic(comicId)
+                .doOnNext(new Consumer<Comic>() {
+                    @Override
+                    public void accept(Comic comic) throws Exception {
+                        inMemoryDataSource.put(comic.getId(), comic);
                     }
                 });
     }

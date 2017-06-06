@@ -37,7 +37,11 @@ public class LocalComicDataSource implements ComicDataSource {
 
     @Override
     public Observable<Comic> getComic(long comicId) {
-        return Observable.just(findComicById(comicId));
+        Comic comic = findComicById(comicId);
+        if (comic == null) {
+            return Observable.empty();
+        }
+        return Observable.just(comic);
     }
 
     private List<Comic> findComics() {
@@ -45,8 +49,7 @@ public class LocalComicDataSource implements ComicDataSource {
         RealmResults<ComicRealm> comicRealms = realm.where(ComicRealm.class)
                 .findAll();
 
-        List<Comic> comics = new ArrayList<>(mapper.mapMany(comicRealms));
-        return comics;
+        return new ArrayList<>(mapper.mapMany(comicRealms));
     }
 
     private Comic findComicById(long comicId) {
@@ -54,6 +57,10 @@ public class LocalComicDataSource implements ComicDataSource {
         ComicRealm comicRealm = realm.where(ComicRealm.class)
                 .equalTo(Tables.Comic.id, comicId)
                 .findFirst();
-        return mapper.map1(comicRealm);
+
+        if (comicRealm != null) {
+            return mapper.map1(comicRealm);
+        }
+        return null;
     }
 }
