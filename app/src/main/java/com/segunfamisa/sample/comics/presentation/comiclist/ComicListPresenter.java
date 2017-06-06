@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -70,7 +71,7 @@ public class ComicListPresenter implements ComicListContract.Presenter {
     }
 
     private void fetchComics() {
-        comicRepository.getComics()
+        Disposable disposable = comicRepository.getComics()
                 .observeOn(schedulerProvider.mainThread())
                 .subscribeOn(schedulerProvider.io())
                 .subscribe(new Consumer<List<Comic>>() {
@@ -88,5 +89,6 @@ public class ComicListPresenter implements ComicListContract.Presenter {
                         view.showLoadingError(throwable.toString());
                     }
                 });
+        compositeDisposable.add(disposable);
     }
 }
