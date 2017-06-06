@@ -44,6 +44,7 @@ dependencies {
 
     //  support libraries
     compile "com.android.support:appcompat-v7:$libraries.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$libraries.supportLibraryVersion"
     compile "com.android.support:design:$libraries.supportLibraryVersion"
 
     // dagger
