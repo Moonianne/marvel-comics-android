@@ -4,16 +4,26 @@ package com.segunfamisa.sample.comics.presentation.comicdetails;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
 import com.segunfamisa.sample.comics.data.model.ComicCreators;
+import com.segunfamisa.sample.comics.data.model.ComicPrice;
+import com.segunfamisa.sample.comics.data.model.CreatorSummary;
 import com.segunfamisa.sample.comics.databinding.ComicDetailsBinding;
 import com.segunfamisa.sample.comics.presentation.comicdetails.di.ComicDetailsPresenterModule;
+import com.segunfamisa.sample.comics.presentation.widget.SummaryCellView;
+import com.segunfamisa.sample.comics.util.ListUtils;
+import com.segunfamisa.sample.comics.util.StringUtils;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -115,41 +125,81 @@ public class ComicDetailsFragment extends Fragment implements ComicDetailsContra
 
     @Override
     public void showTitle(String title) {
-        // TODO: 06/06/2017 implement
+        binding.comicTitle.setText(title);
     }
 
     @Override
     public void showDescription(String description) {
-        // TODO: 06/06/2017 implement
+        if (StringUtils.isNullOrEmpty(description)) {
+            binding.comicDescriptionPrompt.setVisibility(View.GONE);
+            binding.comicDescription.setVisibility(View.GONE);
+        } else {
+            binding.comicDescriptionPrompt.setVisibility(View.VISIBLE);
+            binding.comicDescription.setVisibility(View.VISIBLE);
+            binding.comicDescription.setText(description);
+        }
     }
 
     @Override
     public void showPageCount(String pageCount) {
-        // TODO: 06/06/2017 implement
+        binding.comicPageCount.setText(pageCount);
     }
 
     @Override
-    public void showPrice(double price) {
-        // TODO: 06/06/2017 implement
+    public void showPrices(List<ComicPrice> prices) {
+        if (ListUtils.isNullOrEmpty(prices)) {
+            binding.comicPricesPrompt.setVisibility(View.GONE);
+            binding.comicPrices.setVisibility(View.GONE);
+        } else {
+            binding.comicPricesPrompt.setVisibility(View.VISIBLE);
+            binding.comicPrices.setVisibility(View.VISIBLE);
+            binding.comicPrices.removeAllViews();
+            for (ComicPrice price : prices) {
+                SummaryCellView cell = new SummaryCellView(getContext());
+                cell.setText(String.format(Locale.getDefault(),
+                        "$%.2f - %s", price.getPrice(), price.getType()));
+                binding.comicPrices.addView(cell);
+            }
+        }
     }
 
     @Override
     public void showAuthors(ComicCreators authors) {
-        // TODO: 06/06/2017 implement
+        if (ListUtils.isNullOrEmpty(authors.getItems())) {
+            binding.comicAuthors.setVisibility(View.GONE);
+            binding.comicAuthorsPrompt.setVisibility(View.GONE);
+        } else {
+            binding.comicAuthors.setVisibility(View.VISIBLE);
+            binding.comicAuthorsPrompt.setVisibility(View.VISIBLE);
+            binding.comicAuthors.removeAllViews();
+            for (CreatorSummary summary : authors.getItems()) {
+                SummaryCellView cell = new SummaryCellView(getContext());
+                cell.setText(summary.getName() + " - " + summary.getRole());
+                binding.comicAuthors.addView(cell);
+            }
+        }
     }
 
     @Override
     public void showComicImage(String imageUrl) {
-        // TODO: 06/06/2017 implement
+        Glide.with(getContext())
+                .load(imageUrl)
+                .into(binding.comicImage);
     }
 
     @Override
     public void showLoading(boolean isLoading) {
-        // TODO: 06/06/2017 implement
+        binding.loadingProgress.setVisibility(isLoading ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
     public void showError(String error) {
-        // TODO: 06/06/2017 implement
+        Snackbar.make(binding.scrollContent, error, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.error_action_retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        presenter.fetchComicDetails(comicId);
+                    }
+                }).show();
     }
 }

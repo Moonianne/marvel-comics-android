@@ -5,4 +5,13 @@
 
     <!-- menu items -->
     <string name="menu_budget">Budget</string>
+
+    <!-- details screen -->
+    <string name="details_prompt_title">Title</string>
+    <string name="details_prompt_description">Description</string>
+    <string name="details_prompt_authors">Authors</string>
+    <string name="details_price_prompt">Price</string>
+    <string name="details_prompt_page_count">Pages</string>
+
+    <string name="content_desc_comic_image">Comic image</string>
 </resources>
