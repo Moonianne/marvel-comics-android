@@ -66,7 +66,7 @@ public class ComicDetailsPresenterTest {
         verify(view).showTitle(comic.getTitle());
         verify(view).showDescription(comic.getDescription());
         verify(view).showPageCount(String.valueOf(comic.getPageCount()));
-        verify(view).showPrice(comic.getPrices().get(0).getPrice());
+        verify(view).showPrices(comic.getPrices());
         verify(view).showAuthors(comic.getCreators());
         verify(view).showComicImage(comic.getThumbnail().getUrl());
     }

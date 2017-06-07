@@ -4,9 +4,6 @@ package com.segunfamisa.sample.comics.presentation.comicdetails;
 import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.model.Comic;
-import com.segunfamisa.sample.comics.data.model.ComicPrice;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -76,12 +73,8 @@ public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
         view.showTitle(comic.getTitle());
         view.showDescription(comic.getDescription());
         view.showPageCount(String.valueOf(comic.getPageCount()));
-        view.showPrice(resolvePrice(comic.getPrices()));
+        view.showPrices(comic.getPrices());
         view.showAuthors(comic.getCreators());
         view.showComicImage(comic.getThumbnail().getUrl());
-    }
-
-    private double resolvePrice(List<ComicPrice> prices) {
-        return prices.get(0).getPrice();
     }
 }
