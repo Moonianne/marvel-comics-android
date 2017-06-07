@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- detail header text style -->
+    <style name="TextAppearance"/>
+    <style name="TextAppearance.Detail" />
+    <style name="TextAppearance.Detail.Header" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/detail_content_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Detail.Content" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/detail_content_text_size</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+    </style>
+
 </resources>
