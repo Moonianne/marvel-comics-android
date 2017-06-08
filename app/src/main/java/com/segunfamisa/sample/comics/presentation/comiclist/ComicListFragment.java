@@ -17,6 +17,7 @@ import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicListBinding;
+import com.segunfamisa.sample.comics.presentation.budget.BudgetFragment;
 import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
 import com.segunfamisa.sample.comics.presentation.comiclist.adapter.ComicListAdapter;
 import com.segunfamisa.sample.comics.presentation.comiclist.di.ComicListPresenterModule;
@@ -44,6 +45,7 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
         injectComponents();
 
@@ -96,7 +98,9 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
     }
 
     private void setupRecyclerView() {
-        adapter = new ComicListAdapter(this);
+        if (adapter == null) {
+            adapter = new ComicListAdapter(this);
+        }
         binding.comicList.setAdapter(adapter);
         binding.comicList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -108,12 +112,7 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
 
     @Override
     public void showComicDetails(long comicId) {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, ComicDetailsFragment.newInstance(comicId),
-                        ComicDetailsFragment.class.getSimpleName())
-                .addToBackStack(null)
-                .commit();
+        startFragment(ComicDetailsFragment.newInstance(comicId));
     }
 
     @Override
@@ -134,11 +133,19 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
 
     @Override
     public void showComicBudgetScreen() {
-        // TODO: 06/06/2017 navigate to budget screen
+        startFragment(BudgetFragment.newInstance());
     }
 
     @Override
     public void onItemClicked(Comic comic) {
         presenter.navigateToComicDetails(comic);
+    }
+
+    private void startFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(null)
+                .commit();
     }
 }
