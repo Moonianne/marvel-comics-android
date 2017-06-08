@@ -91,6 +91,22 @@ public class Comic {
     }
 
     /**
+     * Gets the least possible price of the comic item (as it is possible to have multiple prices.
+     *
+     * @return - the value of the least price you can get the comic book
+     */
+    public double getLeastPrice() {
+        List<ComicPrice> prices = getPrices();
+        double leastPrice = Double.MAX_VALUE;
+        for (ComicPrice price : prices) {
+            if (price.getPrice() < leastPrice) {
+                leastPrice = price.getPrice();
+            }
+        }
+        return leastPrice;
+    }
+
+    /**
      * Builder class.
      */
     public static class Builder {
