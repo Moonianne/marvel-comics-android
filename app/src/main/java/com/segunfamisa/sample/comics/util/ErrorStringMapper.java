@@ -23,6 +23,11 @@ public class ErrorStringMapper {
         this.context = context;
     }
 
+    /**
+     * Resolves throwable error into likely human readable strings.
+     * @param throwable - throwable
+     * @return - the mapped string error
+     */
     public String getErrorMessage(Throwable throwable) {
         if (throwable instanceof HttpException) {
             // We had non-2XX http error

@@ -54,7 +54,8 @@ public class BudgetPresenterTest {
         setUpErrorMapper();
 
         final SchedulerProvider schedulerProvider = new TestSchedulerProvider();
-        presenter = new BudgetPresenter(budgetCalculator, comicRepository, errorStringMapper, schedulerProvider);
+        presenter = new BudgetPresenter(budgetCalculator, comicRepository, errorStringMapper,
+                schedulerProvider);
     }
 
     @Test

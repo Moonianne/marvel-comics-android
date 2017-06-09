@@ -49,7 +49,7 @@ public class ErrorStringMapperTest {
     }
 
     @Test
-    public void getErrorMessage_IOException() {
+    public void getErrorMessage_IoException() {
         // given that we have an io exception
         Throwable throwable = mock(IOException.class);
 
