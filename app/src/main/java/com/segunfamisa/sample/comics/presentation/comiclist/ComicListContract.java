@@ -28,6 +28,8 @@ public interface ComicListContract {
 
         void setLoading(boolean loading);
 
+        void setRefreshing(boolean refreshing);
+
         void showComicDetails(long comicId);
 
         void showComicList(List<Comic> comicList);

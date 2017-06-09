@@ -65,7 +65,7 @@ public class ComicListPresenter implements ComicListContract.Presenter {
     @Override
     public void refreshComicList() {
         comicRepository.refresh();
-        view.setLoading(true);
+        view.setRefreshing(true);
         fetchComics();
     }
 
@@ -84,6 +84,7 @@ public class ComicListPresenter implements ComicListContract.Presenter {
                     public void accept(List<Comic> comicList) throws Exception {
                         // on next
                         view.setLoading(false);
+                        view.setRefreshing(false);
                         view.showComicList(comicList);
                     }
                 }, new Consumer<Throwable>() {
@@ -91,6 +92,7 @@ public class ComicListPresenter implements ComicListContract.Presenter {
                     public void accept(Throwable throwable) throws Exception {
                         // on error
                         view.setLoading(false);
+                        view.setRefreshing(false);
                         view.showLoadingError(errorStringMapper.getErrorMessage(throwable));
                     }
                 });

@@ -144,6 +144,12 @@ public class ComicListPresenterTest {
 
         // then verify that we show the comic list
         verify(view).showComicList(comicList);
+
+        // then verify that we call to show refreshing
+        verify(view, atLeastOnce()).setRefreshing(true);
+
+        // then verify that we call to hide refreshing
+        verify(view, atLeastOnce()).setRefreshing(false);
     }
 
     @Test

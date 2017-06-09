@@ -115,9 +115,12 @@ public class ComicListFragment extends BaseFragment implements ComicListContract
 
     @Override
     public void setLoading(boolean loading) {
-        binding.refresh.setRefreshing(loading && adapter.getItemCount() > 0);
-        binding.loadingProgress.setVisibility(loading && adapter.getItemCount() == 0 ?
-                View.VISIBLE : View.GONE);
+        binding.loadingProgress.setVisibility(loading ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setRefreshing(boolean refreshing) {
+        binding.refresh.setRefreshing(refreshing);
     }
 
     @Override
