@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 
 import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
+import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicBudgetBinding;
+import com.segunfamisa.sample.comics.presentation.base.BaseFragment;
 import com.segunfamisa.sample.comics.presentation.budget.di.BudgetPresenterModule;
 import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
-import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ import javax.inject.Inject;
 /**
  * Fragment to input the budget.
  */
-public class BudgetFragment extends Fragment implements BudgetContract.View,
+public class BudgetFragment extends BaseFragment implements BudgetContract.View,
         ComicListAdapter.ItemClickListener {
 
     private ComicBudgetBinding binding;
@@ -148,13 +149,7 @@ public class BudgetFragment extends Fragment implements BudgetContract.View,
 
     @Override
     public void showComicDetails(long comicId) {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, ComicDetailsFragment.newInstance(comicId),
-                        ComicDetailsFragment.class.getSimpleName())
-                .addToBackStack(null)
-                .commit();
-
+        startFragment(ComicDetailsFragment.newInstance(comicId));
     }
 
     @Override

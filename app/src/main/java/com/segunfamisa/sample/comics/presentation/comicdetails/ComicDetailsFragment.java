@@ -17,6 +17,7 @@ import com.segunfamisa.sample.comics.data.model.ComicCreators;
 import com.segunfamisa.sample.comics.data.model.ComicPrice;
 import com.segunfamisa.sample.comics.data.model.CreatorSummary;
 import com.segunfamisa.sample.comics.databinding.ComicDetailsBinding;
+import com.segunfamisa.sample.comics.presentation.base.BaseFragment;
 import com.segunfamisa.sample.comics.presentation.comicdetails.di.ComicDetailsPresenterModule;
 import com.segunfamisa.sample.comics.presentation.widget.SummaryCellView;
 import com.segunfamisa.sample.comics.util.ListUtils;
@@ -30,7 +31,7 @@ import javax.inject.Inject;
 /**
  * Fragment for comic details.
  */
-public class ComicDetailsFragment extends Fragment implements ComicDetailsContract.View {
+public class ComicDetailsFragment extends BaseFragment implements ComicDetailsContract.View {
 
     private static final String ARG_COMIC_ID = "arg_comic_id";
 

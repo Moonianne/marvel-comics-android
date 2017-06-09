@@ -17,6 +17,7 @@ import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicListBinding;
+import com.segunfamisa.sample.comics.presentation.base.BaseFragment;
 import com.segunfamisa.sample.comics.presentation.budget.BudgetFragment;
 import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
 import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 /**
  * Fragment for the Comic List.
  */
-public class ComicListFragment extends Fragment implements ComicListContract.View,
+public class ComicListFragment extends BaseFragment implements ComicListContract.View,
         ComicListAdapter.ItemClickListener {
 
     private ComicListBinding binding;
@@ -139,13 +140,5 @@ public class ComicListFragment extends Fragment implements ComicListContract.Vie
     @Override
     public void onItemClicked(Comic comic) {
         presenter.navigateToComicDetails(comic);
-    }
-
-    private void startFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, fragment, fragment.getClass().getSimpleName())
-                .addToBackStack(null)
-                .commit();
     }
 }
