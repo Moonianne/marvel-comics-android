@@ -10,9 +10,14 @@ import com.segunfamisa.sample.comics.util.ListUtils;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Budget presenter.
@@ -33,6 +38,7 @@ public class BudgetPresenter implements BudgetContract.Presenter {
      * @param budgetCalculator  - budget calculator
      * @param schedulerProvider -
      */
+    @Inject
     public BudgetPresenter(ComicRepository comicRepository,
                            BudgetCalculator budgetCalculator,
                            SchedulerProvider schedulerProvider) {
@@ -54,18 +60,27 @@ public class BudgetPresenter implements BudgetContract.Presenter {
     }
 
     @Override
-    public void findComics(final int budget) {
+    public void findComics(final String budget) {
+        if (budget == null || budget.isEmpty()) {
+            return;
+        }
         view.showLoading(true);
         Disposable disposable = comicRepository.getComics()
                 .observeOn(schedulerProvider.mainThread())
                 .subscribeOn(schedulerProvider.io())
-                .subscribe(new Consumer<List<Comic>>() {
+                .flatMap(new Function<List<Comic>, ObservableSource<Map<Integer, List<Comic>>>>() {
                     @Override
-                    public void accept(List<Comic> comicList) throws Exception {
+                    public ObservableSource<Map<Integer, List<Comic>>> apply(List<Comic> comicList)
+                            throws Exception {
+                        return Observable.just(
+                                budgetCalculator.calculate(intValueOf(budget), comicList));
+                    }
+                })
+                .subscribe(new Consumer<Map<Integer, List<Comic>>>() {
+                    @Override
+                    public void accept(Map<Integer, List<Comic>> budgetResults) throws Exception {
                         // on next
                         view.showLoading(false);
-                        Map<Integer, List<Comic>> budgetResults =
-                                budgetCalculator.calculate(budget, comicList);
 
                         handleBudgetResults(budgetResults);
                     }
@@ -87,6 +102,15 @@ public class BudgetPresenter implements BudgetContract.Presenter {
         view.showTotalComicPagesCountForBudget(budgetPages);
         view.showMatchingComicList(comics);
         view.showNoMatchingComic(ListUtils.isNullOrEmpty(comics));
+    }
+
+    private int intValueOf(String value) {
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+            return 0;
+        }
     }
 
     @Override

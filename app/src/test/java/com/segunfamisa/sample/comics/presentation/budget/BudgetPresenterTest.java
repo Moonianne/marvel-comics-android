@@ -68,7 +68,7 @@ public class BudgetPresenterTest {
         presenter.onAttach(view);
 
         // when we find comics
-        presenter.findComics(budget);
+        presenter.findComics(String.valueOf(budget));
 
         // then verify that the budget calculator is called with the expected params
         verify(budgetCalculator).calculate(budget, comics);
@@ -105,7 +105,7 @@ public class BudgetPresenterTest {
         presenter.onAttach(view);
 
         // when we find comics
-        presenter.findComics(budget);
+        presenter.findComics(String.valueOf(budget));
 
         // then verify that the budget calculator is called with the expected params
         verify(budgetCalculator).calculate(budget, comics);
@@ -134,7 +134,7 @@ public class BudgetPresenterTest {
 
         // when we call find comics
         int budget = 40;
-        presenter.findComics(budget);
+        presenter.findComics(String.valueOf(budget));
 
         // then verify that we show loading at least once
         verify(view, atLeastOnce()).showLoading(true);

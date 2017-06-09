@@ -14,7 +14,7 @@ public interface BudgetContract {
 
     interface Presenter extends BasePresenter<View> {
 
-        void findComics(int budget);
+        void findComics(String budget);
 
         void navigateToComicDetails(Comic comic);
     }
