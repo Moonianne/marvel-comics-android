@@ -22,4 +22,10 @@
     <string name="title_budget">Find comics for your budget!</string>
     <string name="error_no_match">Sorry, no matching comics!</string>
 
+    <!-- error messages -->
+    <string name="error_msg_empty_articles">Oops, no articles now. Check back later</string>
+    <string name="error_msg_server">Something seems to be wrong with the server</string>
+    <string name="error_msg_network">Please check your connection</string>
+    <string name="error_msg_network_generic">Well, something went wrong :(</string>
+
 </resources>
