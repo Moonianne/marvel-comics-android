@@ -25,13 +25,12 @@ public class BudgetCalculator {
 
     /**
      * Calculate the optimal comic books that can be bought for budget USD while
-     *  maximizing the number of pages to be read.
+     *      maximizing the number of pages to be read.
      *
      * @return a map containing a single k,v pair of the max spending and the list of the
      *      matching comic books.
      */
     public Map<Integer, List<Comic>> calculate(int budget, List<Comic> items) {
-        budget = budget * 100;
         return solveKnapsack(budget, items);
     }
 
@@ -63,7 +62,7 @@ public class BudgetCalculator {
         for (comicIndex = 1; comicIndex <= comicCount; comicIndex++) {
             for (price = 1; price <= budget; price++) {
                 Comic comic = comicList.get(comicIndex - 1);
-                int comicPrice = (int) (comic.getLeastPrice() * 100);
+                int comicPrice = (int) (comic.getLeastPrice());
                 if (comicPrice <= price) {
                     pages[comicIndex][price] = Math.max(pages[comicIndex - 1][price],
                             comic.getPageCount() + pages[comicIndex - 1][price - comicPrice]);
@@ -84,8 +83,7 @@ public class BudgetCalculator {
         while (comicIndex > 0 && price > 0) {
             Comic comic = comicList.get(comicIndex - 1);
 
-            // convert to cents to avoid fractions
-            int comicPrice = (int) (comic.getLeastPrice() * 100);
+            int comicPrice = (int) (comic.getLeastPrice());
             if (pages[comicIndex][price] != pages[comicIndex - 1][price]) {
                 results.add(comic);
                 price = price - comicPrice;
