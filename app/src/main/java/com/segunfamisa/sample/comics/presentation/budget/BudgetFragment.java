@@ -17,7 +17,7 @@ import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicBudgetBinding;
 import com.segunfamisa.sample.comics.presentation.budget.di.BudgetPresenterModule;
 import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
-import com.segunfamisa.sample.comics.presentation.comiclist.adapter.ComicListAdapter;
+import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
 
 import java.util.List;
 

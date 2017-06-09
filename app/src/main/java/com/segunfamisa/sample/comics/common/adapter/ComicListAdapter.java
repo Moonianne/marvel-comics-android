@@ -1,4 +1,4 @@
-package com.segunfamisa.sample.comics.presentation.comiclist.adapter;
+package com.segunfamisa.sample.comics.common.adapter;
 
 
 import android.databinding.DataBindingUtil;
