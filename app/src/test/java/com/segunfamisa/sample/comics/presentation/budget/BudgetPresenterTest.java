@@ -5,6 +5,7 @@ import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.TestDataGenerator;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.util.BudgetCalculator;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 import com.segunfamisa.sample.comics.util.TestSchedulerProvider;
 
 import org.junit.Before;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -33,6 +35,9 @@ public class BudgetPresenterTest {
     private BudgetContract.View view;
 
     @Mock
+    private ErrorStringMapper errorStringMapper;
+
+    @Mock
     private BudgetCalculator budgetCalculator;
 
     private final List<Comic> comics = TestDataGenerator.getComics();
@@ -45,8 +50,11 @@ public class BudgetPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        // setup error mapper;
+        setUpErrorMapper();
+
         final SchedulerProvider schedulerProvider = new TestSchedulerProvider();
-        presenter = new BudgetPresenter(comicRepository, budgetCalculator, schedulerProvider);
+        presenter = new BudgetPresenter(budgetCalculator, comicRepository, errorStringMapper, schedulerProvider);
     }
 
     @Test
@@ -159,6 +167,10 @@ public class BudgetPresenterTest {
 
         // then verify that the view is called to show the details
         verify(view).showComicDetails(comic.getId());
+    }
+
+    private void setUpErrorMapper() {
+        when(errorStringMapper.getErrorMessage(any(Throwable.class))).thenReturn("Error");
     }
 
 }

@@ -4,6 +4,7 @@ import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.TestDataGenerator;
 import com.segunfamisa.sample.comics.data.model.Comic;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 import com.segunfamisa.sample.comics.util.TestSchedulerProvider;
 
 import org.junit.Before;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -29,6 +31,9 @@ public class ComicListPresenterTest {
     @Mock
     private ComicRepository comicRepository;
 
+    @Mock
+    private ErrorStringMapper errorStringMapper;
+
     private List<Comic> comicList = TestDataGenerator.getComics();
     private ComicListContract.Presenter presenter;
 
@@ -40,7 +45,7 @@ public class ComicListPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         SchedulerProvider schedulerProvider = new TestSchedulerProvider();
-        presenter = new ComicListPresenter(comicRepository, schedulerProvider);
+        presenter = new ComicListPresenter(comicRepository, errorStringMapper, schedulerProvider);
     }
 
     @Test
@@ -99,6 +104,9 @@ public class ComicListPresenterTest {
         // given the repository returns an error
         when(comicRepository.getComics()).thenReturn(
                 Observable.<List<Comic>>error(new Throwable("Error")));
+
+        // given that the error mapper returns a string
+        when(errorStringMapper.getErrorMessage(any(Throwable.class))).thenReturn("Error");
 
         // given that the view has been attached
         presenter.onAttach(view);

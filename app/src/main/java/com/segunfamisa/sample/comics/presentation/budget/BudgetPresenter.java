@@ -5,6 +5,7 @@ import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.util.BudgetCalculator;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 import com.segunfamisa.sample.comics.util.ListUtils;
 
 import java.util.List;
@@ -24,8 +25,9 @@ import io.reactivex.functions.Function;
  */
 public class BudgetPresenter implements BudgetContract.Presenter {
 
-    private final ComicRepository comicRepository;
     private final BudgetCalculator budgetCalculator;
+    private final ComicRepository comicRepository;
+    private final ErrorStringMapper errorStringMapper;
     private final SchedulerProvider schedulerProvider;
     private CompositeDisposable compositeDisposable;
 
@@ -34,16 +36,19 @@ public class BudgetPresenter implements BudgetContract.Presenter {
     /**
      * Create a new budget presenter.
      *
-     * @param comicRepository   - comic repository
      * @param budgetCalculator  - budget calculator
-     * @param schedulerProvider -
+     * @param comicRepository   - comic repository
+     * @param errorStringMapper - error string mapper
+     * @param schedulerProvider - scheduler provider
      */
     @Inject
-    public BudgetPresenter(ComicRepository comicRepository,
-                           BudgetCalculator budgetCalculator,
+    public BudgetPresenter(BudgetCalculator budgetCalculator,
+                           ComicRepository comicRepository,
+                           ErrorStringMapper errorStringMapper,
                            SchedulerProvider schedulerProvider) {
-        this.comicRepository = comicRepository;
         this.budgetCalculator = budgetCalculator;
+        this.comicRepository = comicRepository;
+        this.errorStringMapper = errorStringMapper;
         this.schedulerProvider = schedulerProvider;
         compositeDisposable = new CompositeDisposable();
     }
@@ -89,7 +94,7 @@ public class BudgetPresenter implements BudgetContract.Presenter {
                     public void accept(Throwable throwable) throws Exception {
                         // on error
                         view.showLoading(false);
-                        view.showError(throwable.getMessage());
+                        view.showError(errorStringMapper.getErrorMessage(throwable));
                     }
                 });
         compositeDisposable.add(disposable);

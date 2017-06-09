@@ -4,6 +4,7 @@ import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.TestDataGenerator;
 import com.segunfamisa.sample.comics.data.model.Comic;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 import com.segunfamisa.sample.comics.util.TestSchedulerProvider;
 
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
@@ -27,6 +29,9 @@ public class ComicDetailsPresenterTest {
     @Mock
     private ComicRepository comicRepository;
 
+    @Mock
+    private ErrorStringMapper errorStringMapper;
+
     private final Comic comic = TestDataGenerator.getComic();
     private ComicDetailsContract.Presenter presenter;
 
@@ -37,8 +42,12 @@ public class ComicDetailsPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        // setup error mapper;
+        setUpErrorMapper();
+
         SchedulerProvider schedulerProvider = new TestSchedulerProvider();
-        presenter = new ComicDetailsPresenter(comicRepository, schedulerProvider);
+        presenter = new ComicDetailsPresenter(comicRepository, errorStringMapper,
+                schedulerProvider);
     }
 
     @Test
@@ -97,4 +106,7 @@ public class ComicDetailsPresenterTest {
         verify(view).showError(anyString());
     }
 
+    private void setUpErrorMapper() {
+        when(errorStringMapper.getErrorMessage(any(Throwable.class))).thenReturn("Error");
+    }
 }

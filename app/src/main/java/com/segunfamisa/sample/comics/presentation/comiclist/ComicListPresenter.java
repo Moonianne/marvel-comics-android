@@ -4,6 +4,7 @@ package com.segunfamisa.sample.comics.presentation.comiclist;
 import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.model.Comic;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import io.reactivex.functions.Consumer;
 public class ComicListPresenter implements ComicListContract.Presenter {
 
     private final ComicRepository comicRepository;
+    private final ErrorStringMapper errorStringMapper;
     private final SchedulerProvider schedulerProvider;
     private CompositeDisposable compositeDisposable;
     private ComicListContract.View view;
@@ -26,13 +28,16 @@ public class ComicListPresenter implements ComicListContract.Presenter {
     /**
      * Construct new presenter.
      *
-     * @param comicRepository - comic repository
+     * @param comicRepository   - comic repository
+     * @param errorStringMapper - error string mapper
      * @param schedulerProvider - scheduler provider
      */
     @Inject
     public ComicListPresenter(ComicRepository comicRepository,
+                              ErrorStringMapper errorStringMapper,
                               SchedulerProvider schedulerProvider) {
         this.comicRepository = comicRepository;
+        this.errorStringMapper = errorStringMapper;
         this.schedulerProvider = schedulerProvider;
         compositeDisposable = new CompositeDisposable();
     }
@@ -86,7 +91,7 @@ public class ComicListPresenter implements ComicListContract.Presenter {
                     public void accept(Throwable throwable) throws Exception {
                         // on error
                         view.setLoading(false);
-                        view.showLoadingError(throwable.toString());
+                        view.showLoadingError(errorStringMapper.getErrorMessage(throwable));
                     }
                 });
         compositeDisposable.add(disposable);

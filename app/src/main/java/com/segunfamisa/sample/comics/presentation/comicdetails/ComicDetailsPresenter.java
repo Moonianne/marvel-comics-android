@@ -4,6 +4,7 @@ package com.segunfamisa.sample.comics.presentation.comicdetails;
 import com.segunfamisa.sample.comics.common.scheduler.SchedulerProvider;
 import com.segunfamisa.sample.comics.data.ComicRepository;
 import com.segunfamisa.sample.comics.data.model.Comic;
+import com.segunfamisa.sample.comics.util.ErrorStringMapper;
 
 import javax.inject.Inject;
 
@@ -17,6 +18,7 @@ import io.reactivex.functions.Consumer;
 public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
 
     private final ComicRepository comicRepository;
+    private final ErrorStringMapper errorStringMapper;
     private final SchedulerProvider schedulerProvider;
     private ComicDetailsContract.View view;
     private CompositeDisposable compositeDisposable;
@@ -24,13 +26,16 @@ public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
     /**
      * Comic details presenter.
      *
-     * @param comicRepository - comic repository
+     * @param comicRepository   - comic repository
+     * @param errorStringMapper - error string mapper
      * @param schedulerProvider - scheduler provider
      */
     @Inject
     public ComicDetailsPresenter(ComicRepository comicRepository,
+                                 ErrorStringMapper errorStringMapper,
                                  SchedulerProvider schedulerProvider) {
         this.comicRepository = comicRepository;
+        this.errorStringMapper = errorStringMapper;
         this.schedulerProvider = schedulerProvider;
         compositeDisposable = new CompositeDisposable();
     }
@@ -63,7 +68,7 @@ public class ComicDetailsPresenter implements ComicDetailsContract.Presenter {
                     public void accept(Throwable throwable) throws Exception {
                         // on error
                         view.showLoading(false);
-                        view.showError(throwable.toString());
+                        view.showError(errorStringMapper.getErrorMessage(throwable));
                     }
                 });
         compositeDisposable.add(disposable);
