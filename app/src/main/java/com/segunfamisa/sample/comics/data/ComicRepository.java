@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 
@@ -63,6 +64,7 @@ public class ComicRepository {
 
         Observable<List<Comic>> remoteComics = getAndSaveRemoteComics();
         if (forceRefresh) {
+            forceRefresh = false;
             return remoteComics;
         } else {
             List<Observable<List<Comic>>> sourcesObservable = new ArrayList<>();
