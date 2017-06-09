@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -15,12 +16,12 @@ import android.view.ViewGroup;
 
 import com.segunfamisa.sample.comics.App;
 import com.segunfamisa.sample.comics.R;
+import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
 import com.segunfamisa.sample.comics.data.model.Comic;
 import com.segunfamisa.sample.comics.databinding.ComicListBinding;
 import com.segunfamisa.sample.comics.presentation.base.BaseFragment;
 import com.segunfamisa.sample.comics.presentation.budget.BudgetFragment;
 import com.segunfamisa.sample.comics.presentation.comicdetails.ComicDetailsFragment;
-import com.segunfamisa.sample.comics.common.adapter.ComicListAdapter;
 import com.segunfamisa.sample.comics.presentation.comiclist.di.ComicListPresenterModule;
 
 import java.util.List;
@@ -104,11 +105,19 @@ public class ComicListFragment extends BaseFragment implements ComicListContract
         }
         binding.comicList.setAdapter(adapter);
         binding.comicList.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.refreshComicList();
+            }
+        });
     }
 
     @Override
     public void setLoading(boolean loading) {
-        binding.loadingProgress.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.refresh.setRefreshing(loading && adapter.getItemCount() > 0);
+        binding.loadingProgress.setVisibility(loading && adapter.getItemCount() == 0 ?
+                View.VISIBLE : View.GONE);
     }
 
     @Override
